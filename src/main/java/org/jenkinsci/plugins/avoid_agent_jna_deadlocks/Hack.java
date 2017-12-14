@@ -40,7 +40,13 @@ import jenkins.security.MasterToSlaveCallable;
 
     @Override public void preOnline(Computer c, Channel channel, FilePath root, TaskListener listener) throws IOException, InterruptedException {
         listener.getLogger().println("Preloading JNA to avoid JENKINS-39179");
-        listener.getLogger().println("Success! " + channel.call(new PreloadJNA()));
+        String result;
+        try {
+            result = channel.call(new PreloadJNA());
+        } catch (RuntimeException x) {
+            throw new IOException(x);
+        }
+        listener.getLogger().println("Success! " + result);
     }
 
     private static class PreloadJNA extends MasterToSlaveCallable<String, RuntimeException> {
