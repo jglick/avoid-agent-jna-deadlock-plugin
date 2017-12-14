@@ -1,0 +1,4 @@
+<?jelly escape-by-default='true'?>
+<div>
+    Strives to avoid JENKINS-39179 deadlocks by preinitializing JNA on an agent.
+</div>
